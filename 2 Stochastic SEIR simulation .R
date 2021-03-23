@@ -12,14 +12,6 @@ INF<-matrix(NA,nrow=1001,ncol=100)
 REC<-matrix(NA,nrow=1001,ncol=100)
 
 
-a1vals<-seq(0.1,0.3,length.out = 20)
-a2vals<-seq(0.1,0.5,length.out = 20)
-  
-# AMATRIX<-matrix(NA,ncol=20,nrow=20)
-# 
-# for(a1 in 1:length(a1vals)){
-# for(a2 in a1:length(a2vals)){
-#   
 for(reps in 1:100){
 N=56000000 # Population size
 m<- 245 # Number of initial infectives (t0 = 12 march)
@@ -43,15 +35,13 @@ t5 <- 298 # 4 ene, LOCKDOWN AGAIN
 #alpha1 <-0.2797965116 
 #alpha2 <-0.3136474908
 
-# alpha1<-a1vals[a1]
-# alpha2<-a2vals[a2]
-  
+# Values of impact of lockdown and postlockdown (Obtained from Google mobility)
 alpha1<-0.2443221
 alpha2<-0.3206636
 
 beta<-function(t){ #t0 is the date of implementation
     ifelse(t < t1, beta_r,
-    ifelse(t >= t1 & t < t2, beta_r*alpha1,jajaja
+    ifelse(t >= t1 & t < t2, beta_r*alpha1,
     ifelse(t >= t2 & t < t3, beta_r*alpha2,
     ifelse(t >= t3 & t < t4 , beta_r*alpha1,
     ifelse(t >= t4 & t < t5 , beta_r*alpha2,
@@ -104,9 +94,8 @@ SUS[,reps]<-S
 INF[,reps]<-I2
 REC[,reps]<-R
 HOSP[,reps]<-H
-} # End of repetitions for simulating
-#     AMATRIX[a1,a2]<-mean((apply(HOSP,1,mean)[4:330]-data$Admissions[4:330])^2)
-#   }
+} # End of repetitions from simulation 
+
 # }
 # ************** P L O T S ***************
 
