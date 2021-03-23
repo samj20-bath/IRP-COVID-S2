@@ -1,7 +1,7 @@
 # SEIR stochastic model (almost an "Standard SEIR model" see Britton p.11)
 rm(list=ls())
 
-setwd("~/Desktop/SAMBa/Semester 1/IRP/Data")
+setwd("~/Desktop/SAMBa/Semester 1/IRP/R Code/IRP-COVID-S2/Data")
 data<-read.csv("Data IRP Covid19 Strand 2 - Hoja 3.csv",header=T,stringsAsFactors = F)
 data$Admissions<-as.numeric(data$Admissions)
 
@@ -43,13 +43,6 @@ t5 <- 298 # 4 ene, LOCKDOWN AGAIN
 #alpha1 <-0.2797965116 
 #alpha2 <-0.3136474908
 
-#alpha1 <- 3/15 #these work well # should I use brute
-#alpha2 <- 5/15 # force to find this estimations given Hospitalisations?
-
-# beta_r<-2.0 #this solves the first wave problem but has no sense for R
-# alpha1<-1.1/15
-# alpha2<-2.2/15
-
 # alpha1<-a1vals[a1]
 # alpha2<-a2vals[a2]
   
@@ -58,7 +51,7 @@ alpha2<-0.3206636
 
 beta<-function(t){ #t0 is the date of implementation
     ifelse(t < t1, beta_r,
-    ifelse(t >= t1 & t < t2, beta_r*alpha1,
+    ifelse(t >= t1 & t < t2, beta_r*alpha1,jajaja
     ifelse(t >= t2 & t < t3, beta_r*alpha2,
     ifelse(t >= t3 & t < t4 , beta_r*alpha1,
     ifelse(t >= t4 & t < t5 , beta_r*alpha2,

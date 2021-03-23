@@ -1,10 +1,12 @@
 library(plotly)
 library(readxl)
 
-setwd("~/Desktop/SAMBa/Semester 1/IRP/Data")
+setwd("~/Desktop/SAMBa/Semester 1/IRP/R Code/IRP-COVID-S2/Data")
 data<-read.csv("Data IRP Covid19 Strand 2 - Hoja 3.csv",header=T,stringsAsFactors = F)
 three_months_days<-data[data$YEAR=="2020"&data$MONTH%in%c(8,9,10),]$days.from.12.March
 data$Admissions<-as.numeric(data$Admissions)
+data_google<-read_xlsx("google_activity_by_London_Borough.xlsx",sheet=2)
+R_data<-read.csv("R-and-growth-rate-time-series-26-Feb-2021.csv",sep=";",header=TRUE)
 
 t1 <-11  # LOCKDOWN
 t2 <-103 # 4 july, NO LOCKDOWN
@@ -49,9 +51,8 @@ legend("topleft",legend=text,
 title("Cases by reported date and hospitalisations", line=-3 ,outer = TRUE)
 
 #**************************************************************************************
-data_google<-read_xlsx("google_activity_by_London_Borough.xlsx",sheet=2)
 
-quartz(height = 5,width = 9)
+#quartz(height = 5,width = 9)
 plot(-20:366,data_google$`Retail and recreation`,type="l",col="purple",
      xlab="Days from March 12",ylab="Change in mobility index(%)",main="Google mobility index")
 lines(-20:366,data_google$`Grocery and pharmacy`,type="l",col="darkturquoise")
@@ -62,7 +63,6 @@ abline(v=t3,lty=4,lwd=1.5)
 abline(v=t4,lty=4,lwd=1.5)
 legend("topright",legend=c("Retail and recreation","Grocery and pharmacy","Change in lockdown policy"),col=c("purple","darkturquoise","black"),
        lty=c(1,1,2),bg="white")
-
 
 #******************* Estimation of alphas according to google ***********************************
 gugl<-data.frame(time=-5:366,data_google$`Retail and recreation`[-c(1:15)])
@@ -126,8 +126,7 @@ fig <- fig %>% layout(
 
 # ***PLOT**** Effective reproduction numberand L-S Estimation of alphas
 
-R_data<-read.csv("R-and-growth-rate-time-series-26-Feb-2021.csv",sep=";",header=TRUE)
-# 
+
 # beta<-function(t,alpha1=3.5/15,alpha2=5.5/15){ #t0 is the date of implementation
 #   ifelse(t < t0, beta_r,
 #          ifelse(t >= t0 & t < t1, beta_r*alpha1,
@@ -150,11 +149,9 @@ alpha1_<-mean(R_data[R_data$days>=t1&R_data$days<t2|(R_data$days>=t3&R_data$days
 alpha2_<-mean(R_data[R_data$days>=t2&R_data$days<t3|(R_data$days>=t4&R_data$days<t5),]$England)
 
 beta_r <- 0.86# Constant transmission rate by day R_0=3.4444 (According to Liu) (R_0/avg.days)
-rho <-0.33333 # 1/mean of incubation period
 gamma<-0.25 # 1/mean of infectious period (4 days according to Britton)
 
 alpha1<-(gamma*alpha1_)/beta_r
-
 alpha2<-(gamma*alpha2_)/beta_r
 print(alpha1)
 print(alpha2)
