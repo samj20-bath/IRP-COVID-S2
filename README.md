@@ -6,7 +6,8 @@ The script '1 Estimation of parameters.R'
   * Estimate the transmission rate function parameters
     - Using LS
     - Assuming proportionality wrt Google's mobility index
-  * Plots the loglikelihood of $\theta$ and $p_H$
+  * Plots the loglikelihood of```math SE = \frac{\sigma}{\sqrt{n}}
+``` $\theta$ and $p_H$
   
 
 The script '2 Stochastic SEIR simulation.R' 
